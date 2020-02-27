@@ -12,3 +12,51 @@ pimps:
     - label: "Github"
       icon: "fab fa-fw fa-github-square"
       url: "https://github.com/pimps"
+
+
+jeremy:
+  name        : "jeremy"
+  bio         : ""
+  avatar      : https://i.imgur.com/JrAhcxW.png
+  location    : "Australia"
+
+
+mphx2:
+  name        : "mphx2"
+  bio         : ""
+  avatar      : https://i.imgur.com/DWofmQo.png
+  links:
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/mphx2"
+
+
+lanjelot:
+  name        : "lanjelot"
+  bio         : ""
+  avatar      : https://i.imgur.com/mnpbUxw.png
+  links:
+    - label: "Github"
+      icon: "fab fa-fw fa-github-square"
+      url: "https://github.com/lanjelot"
+
+
+menztrual:
+  name        : "menztrual"
+  bio         : ""
+  avatar      : https://i.imgur.com/zsIYy3Q.png
+  location    : "Melbourne, Australia"
+  links:
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/menztrual"
+
+
+rick:
+  name        : "rick"
+  bio         : ""
+
+
+ace:
+  name        : "ace"
+  bio         : ""
