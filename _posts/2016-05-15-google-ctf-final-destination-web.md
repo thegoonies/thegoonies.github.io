@@ -93,7 +93,7 @@ Host: our.ip
 ZXJyb3IsRXJyb3I6IE5FVFdPUktfRVJSOiBYTUxIdHRwUmVxdWVzdCBFeGNlcHRpb24gMTAxLHVuZGVmaW5lZA==
 ```
 
-At this point, {{ site.data.authors.ace }} stepped in and found the following two tricks:
+At this point, {{ site.data.authors.ace.name }} stepped in and found the following two tricks:
 
  1. Trick #1: we can use 0x0C instead of space to separate html tag attributes as the WAF doesn't filter it out. Thanks to [@cure53](https://github.com/cure53/XSSChallengeWiki/wiki/prompt.ml#level-5) for the fine research.
  1. Trick #2: let's try to use [html imports](https://html5sec.org/#138), a feature [supported](http://caniuse.com/#feat=imports) by webkit-based browsers and therefore phantomjs. Also note that the WAF filtered out obvious event handlers such as onerror etc.
