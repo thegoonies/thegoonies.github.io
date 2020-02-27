@@ -1,0 +1,14 @@
+# /_data/authors.yml
+
+pimps:
+  name        : "pimp"
+  bio         : "FLAAAAAGS... SLOTH LOVE FLAAAAAGS...."
+  avatar      : https://i.imgur.com/6SuAsqi.jpg
+  location    : "Melbourne, Australia"
+  links:
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/marcioalm"
+    - label: "Github"
+      icon: "fab fa-fw fa-github-square"
+      url: "https://github.com/pimps"
