@@ -12,10 +12,6 @@ description:      'Thoughts, stories and ideas.'
 url:              https://thegoonies.github.io
 baseurl:          /
 
-author:
-  name:           'thegooniesctf'
-  url:            https://twitter.com/@thegooniesctf
-
 paginate:         5
 
 # Custom vars
