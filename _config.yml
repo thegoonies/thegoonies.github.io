@@ -23,6 +23,8 @@ version:          2.0
 
 github:
   repo:           https://github.com/thegoonies/thegoonies.github.io
+  tools:          https://github.com/thegoonies/
+
 
 # headline delimitor
 excerpt_separator: <!--more-->
