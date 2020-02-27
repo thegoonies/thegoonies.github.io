@@ -7,8 +7,8 @@ permalink:        pretty
 
 # Setup
 title:            TheGoonies CTF blog
-tagline:          'Yet another CTF blo'
-description:      ''
+tagline:          'Yet another CTF blog'
+description:      'Thoughts, stories and ideas.'
 url:              https://thegoonies.github.io
 baseurl:          /
 
