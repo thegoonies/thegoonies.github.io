@@ -9,7 +9,7 @@ tags: [ctf, bsidessf, forensics]
  * Challenge Name: shattered
  * Type: Forensics
  * Points: 200 pts
- * URL: https://scoreboard.ctf.bsidessf.com/attachment/  * e6b6a3706e015298b8227f56e33d8cc5cb379a9c45a7eeee08c1f193c578ca1b
+ * URL: https://scoreboard.ctf.bsidessf.com/attachment/e6b6a3706e015298b8227f56e33d8cc5cb379a9c45a7eeee08c1f193c578ca1b
 
 <!--more-->
 
