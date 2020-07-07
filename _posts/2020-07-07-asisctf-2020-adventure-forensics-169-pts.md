@@ -1,4 +1,3 @@
-
 ---
 layout: post
 title: ASIS CTF 2020 - Adventure [misc, forensics]
@@ -16,7 +15,7 @@ Note: Slow-download is international and part of the task.
 
 
 For this masochists task, we are given a URL to a gigantic file that downloads slowly. The description says that it's part of the tasks. This hints that we might need to download interesting parts of the file by chunks using `Range`. This is confirmed by the `Accept-Ranges` response header:
-
+<!--more-->
 ```http
 $ curl --head http://66.172.11.212:1337/large.tar
 HTTP/1.1 200 OK
