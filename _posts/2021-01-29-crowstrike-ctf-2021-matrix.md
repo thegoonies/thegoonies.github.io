@@ -26,7 +26,10 @@ This means `function U` is the inverse function of itself: `U(U(K)) = K`.
 We can validate this by coming up with a key and debug.
 
 Now, let's take one message (from the flagz) and reverse the bytes that are the result of `U`.
-I took `259F8D014A44C2BE8FC50A5A2C1EF0C13D7F2E0E70009CCCB4C2ED84137DB4C2EDE078807E1616C266D5A15DC6DDB60E4B7337E851E739A61EED83D2E06D618411DF61222EED83D2E06D612C8EB5294BCD4954E0855F4D71D0F06D05EE`.
+I took 
+```
+259F8D014A44C2BE8FC50A5A2C1EF0C13D7F2E0E70009CCCB4C2ED84137DB4C2EDE078807E1616C266D5A15DC6DDB60E4B7337E851E739A61EED83D2E06D618411DF61222EED83D2E06D612C8EB5294BCD4954E0855F4D71D0F06D05EE
+```
 
 Let's say that the 9 bytes that are the result of `U(K)` are `U1,U2,...,U9`.
 Then, following `function C` and using our knowledge of the `SPACEARMY` prefix, we get the following:
