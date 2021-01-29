@@ -18,6 +18,8 @@ The code is pretty straightforward, it does the following:
 * It sets the same signal handler to various signals to just output a message and quit (to gracefully handle execution errors).
 * It decrypts a payload of length `196` by cyclically XOR-ing one byte at a time with the password.
 
+<!--more-->
+
 Obviously the important part of the payload XOR-ing:
 ```c
   mem_mapped = (code *)mmap((void *)0x0,payload_len,7,0x22,-1,0);
