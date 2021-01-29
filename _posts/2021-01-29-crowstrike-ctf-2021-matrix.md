@@ -18,6 +18,8 @@ Let's examine the cipher with a black-box approach. Here are some facts:
 * First 9 bytes of a plaintext are always `SPACEARMY`.
 * `Function C` is used for encryption and decryption, but the key is either `K` for decryption or `U(K)` for encryption.
 
+<!--more-->
+
 Because `function C` is used for both encryption and decryption but with different key, we conclude that `function U` gets a key and calculates an "anti-key".
 The anti-key must adhere to: `C(K, C(U(K), M)) = M`.
 This means `function U` is the inverse function of itself: `U(U(K)) = K`.
