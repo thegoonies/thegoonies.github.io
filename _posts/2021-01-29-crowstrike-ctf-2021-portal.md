@@ -14,10 +14,13 @@ date: 2021-01-29 19:43
 > Please download the Portal Code and see whether you can reproduce their means of initial access vector. We stood up a test instance of the authentication portal for you to validate against.
 
 The target for this challenge is located at https://authportal.challenges.adversary.zone:8880/cgi-bin/portal.cgi. By opening the Qemu image we can get retrieve the ELF64 file: `cgi-bin/portal.cgi`. That "portal" is fairly basic, only asking for credentials.
+<!--more-->
 
 # Reversing the binary
 
 The binary was quickly identified:
+
+
 
 ```bash
 $ file cgi-bin/portal.cgi
