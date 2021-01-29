@@ -65,7 +65,7 @@ s.close()
 ```
 
 would corrupt the stack, but also overwrite the canary triggering `__stack_chk_fail` and we don't like that much.
-But booking closely at the stack layout, we realize something:
+But looking closely at the stack layout, we realized something:
 
 ```
                      ^
