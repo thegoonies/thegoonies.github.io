@@ -74,7 +74,7 @@ For example, for the first byte we only need:
 ```python=
  [ i for i in range(256) if poly(a, 69684751861829721459380039*i) == 24196561 ]
 ```
-This gives us `106='j' which corresponds to the flag header in 'justCTF{'`.
+This gives us `106='j'` which corresponds to the flag header in `'justCTF{'`.
 
 Since I'm just lazy, I "bruteforced" the polynomial, note that we only have to check the last element as we add more and more bytes:
 ```python=
