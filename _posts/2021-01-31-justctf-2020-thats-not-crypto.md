@@ -12,7 +12,7 @@ tags: [ctf, justCTF, crypto]
  * Description: 
  > This is very simple RE task, but you may need some other skills as well.
 
-Downloaded `checker.pyc`. Decided to use `uncompyle6 [https://pypi.org/project/uncompyle6]` for decompilation.
+Downloaded `checker.pyc`. Decided to use [https://pypi.org/project/uncompyle6](uncompyle6) for decompilation.
 
 The file consists of the following logic:
 * A variable name `a` which is a list of big numbers. It's interpreted as polynomial coefficients.
