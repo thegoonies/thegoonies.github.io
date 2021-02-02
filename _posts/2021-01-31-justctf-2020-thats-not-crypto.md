@@ -22,7 +22,7 @@ The file consists of the following logic:
 <!--more-->
 
 The file itself looks like this:
-```python=
+```python
 def make_correct_array(s):
     from itertools import accumulate
     s = map(ord, s)
@@ -71,7 +71,7 @@ The `validate` function is the most important:
 
 Therefore, we can reverse the polynomial easily.
 For example, for the first byte we only need:
-```python=
+```python
  [ i for i in range(256) if poly(a, 69684751861829721459380039*i) == 24196561 ]
 ```
 This gives us `106='j'` which corresponds to the flag header in `'justCTF{'`.
