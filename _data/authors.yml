@@ -4,7 +4,7 @@ pimps:
   name        : "pimps"
   bio         : "FLAAAAAGS... SLOTH LOVE FLAAAAAGS...."
   avatar      : https://i.imgur.com/6SuAsqi.jpg
-  location    : "Melbourne, Australia"
+  location    : "Australia"
   links:
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
@@ -52,6 +52,20 @@ menztrual:
       url: "https://twitter.com/menztrual"
 
 
+hugsy:
+  name        : "hugsy"
+  bio         : ""
+  avatar      : https://i.imgur.com/gPtTfnR.png
+  location    : "Canada"
+  links:
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/_hugsy_"
+    - label: "Github"
+      icon: "fab fa-fw fa-github-square"
+      url: "https://github.com/hugsy"
+
+
 rick:
   name        : "rick"
   bio         : ""
@@ -62,6 +76,3 @@ ace:
   bio         : ""
 
 
-hugsy:
-  name        : "hugsy"
-  bio         : ""
