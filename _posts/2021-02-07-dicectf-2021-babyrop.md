@@ -1,6 +1,6 @@
 ---
 layout: post
-title: DiceGang CTF 2021 - babyrop
+title: DiceGang CTF 2021 - babyrop [pwn]
 author: hugsy
 tags: [pwn,dicegang,rop,]
 date: 2021-02-08 18:37
@@ -18,6 +18,7 @@ date: 2021-02-08 18:37
 
 This was a beginner level challenge which as the name suggests is all about ROP. Some basic fingerprinting on the `babyrop` binary gives us useful information, such as no canary and partial RelRO.
 
+<!--more-->
 ```bash
 $ file babyrop
 babyrop: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=a721f8e2550d74dddcaae7e8754bff9095e3488d, for GNU/Linux 3.2.0, not stripped
