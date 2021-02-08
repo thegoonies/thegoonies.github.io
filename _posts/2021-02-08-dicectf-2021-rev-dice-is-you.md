@@ -1,8 +1,9 @@
 ---
 layout: post
-title: DiceCTF 2021 - Dice is you [rev]
+title: DiceCTF 2021 - Dice is you
 author: @danilonc
 tags: [ctf, DiceCTF, rev, wasm, z3]
+date: 2021-02-08 17:14
 ---
 
  * Competition: [DiceCTF 2021](https://ctftime.org/event/1236)
