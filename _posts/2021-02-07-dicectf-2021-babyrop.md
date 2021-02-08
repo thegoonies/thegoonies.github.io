@@ -3,7 +3,7 @@ layout: post
 title: DiceGang CTF 2021 - babyrop [pwn]
 author: hugsy
 tags: [pwn,dicegang,rop,]
-date: 2021-02-08 18:37
+date: 2021-02-07 18:37
 ---
 
  * Competition: [DiceGang CTF 2021]()
