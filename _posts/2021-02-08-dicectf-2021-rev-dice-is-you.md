@@ -21,6 +21,8 @@ date: 2021-02-08 17:14
 This challenge is a game inspired by the game `Baba is you`, which is a puzzle game where the player can change "the rules" by interacting with the blocks on the game. 
 The `Dice is you` challenge was implemented using HTML + Javascript + WebAssembly (C language game logic + SDL).
 
+<!--more-->
+
 ## Level 1-4
 
 Levels 1-4 can be easily solved by playing the game, [Youtube Link](http://www.youtube.com/watch?v=Ltl-owf8k1E).
