@@ -1,7 +1,7 @@
 ---
 layout: post
-title: DiceGang CTF 2021 - babyrop [rev]
-author: @danilonc
+title: DiceGang CTF 2021 - Dice is you [rev]
+author: danilonc
 tags: [ctf, DiceCTF, rev, wasm, z3]
 date: 2021-02-08 17:14
 ---
