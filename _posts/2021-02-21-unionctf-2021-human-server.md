@@ -18,6 +18,7 @@ tags: [ctf, Union CTF, crypto]
 The challenge
 =============
 Code is pretty straighforward:
+<!--more-->
 ```python
 import os, random, hashlib, textwrap, json
 from Crypto.Cipher import AES
