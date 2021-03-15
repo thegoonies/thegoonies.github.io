@@ -18,7 +18,7 @@ tags: [ctf, NahamCon CTF, web]
 
 Union SQLi via websocket to SSRF bot to my own site hosting a CSRF to make bot update its profile with a PXSS in the `about` field. The XSS exploits a Jinja2 SSTI on `/debug` and exfils the Flask config back to my own server. Forge admin JWT using `SECRET_KEY` and exploit SSTI directly to gain RCE.
 
-Surprisingly my solution was unintended, see the author's [write up](https://github.com/jorgectf/Created-CTF-Challenges/tree/main/challenges/AgentTester%20@%20NahamConCTF%202021) for the intended solution.
+Surprisingly my solution was unintended, see the author's [write-up](https://github.com/jorgectf/Created-CTF-Challenges/tree/main/challenges/AgentTester%20@%20NahamConCTF%202021) for the intended solution (or [this](https://github.com/b4bergi/ctf-writeups/blob/main/nahamcon-2021/AgentTesterV2.md) one by [@bergi](https://twitter.com/alkiiis)).
 
 <!--more-->
 
@@ -69,7 +69,10 @@ Decode the Flask config.
 Forge the admin JWT cookie using the compromised `SECRET_KEY` and run [tplmap](https://github.com/epinna/tplmap) to automagically exploit the SSTI.
 <!-- {% raw %} -->
 ```console
-$ ./tplmap.py -c 'auth2=eyJpZCI6MX0.YE4ONg.iq1D9O_mtrGWXdQHdrhNtSHPKPI' -u http://challenge.nahamcon.com:30556/debug -d 'code=*' --os-shell
+$ git clone https://github.com/epinna/tplmap && cd tplmap
+$ pipenv --python 2.7 install
+$ pipenv shell
+(tplmap) $ ./tplmap.py -c 'auth2=eyJpZCI6MX0.YE4ONg.iq1D9O_mtrGWXdQHdrhNtSHPKPI' -u http://challenge.nahamcon.com:30556/debug -d 'code=*' --os-shell
 [+] Tplmap 0.5
     Automatic Server-Side Template Injection Detection and Exploitation Tool
 
@@ -159,8 +162,8 @@ posix-linux $
 Flag: `CHALLENGE_FLAG=flag{6daf77ca9478a1be670acd4547f4976a}`
 
 Alternative solutions seen on Discord:
-* CSRF bot to POST to `/debug` and get a reverse shell via SSTI (e.g. using [this code](https://discord.com/channels/598608711186907146/820748103657193472/820756728055726142) by `@BronyUraj#6953`)
-* Simplify the XSS to just exfil the flag using {%raw%}`code={{environ("CHALLENGE_FLAG")}}`{%endraw%} because of this line `app.jinja_env.globals.update(environ=os.environ.get)` in `app/backend/backend.py` (thx to `Gnarf#3685` and the author `@congon4tor#2334` for pointing it out). Otherwise just use `config.__class__.__init__.__globals__['os'].environ`
-* Use another challenge on the `challenge.nahamcon.com` domain to host a PHP script, and SSRF bot via union sqli to net the `auth2` admin cookie. This works because the puppeteer cookie is set with `domain: challenge.nahamcon.com` in `app/browser/browser.js` (credits to `@liath#3287` for this sneaky [solution](https://discord.com/channels/598608711186907146/820748103657193472/820764258480422952))
+* CSRF bot to POST to `/debug` and get a reverse shell via SSTI (e.g. using [this code](https://discord.com/channels/598608711186907146/820748103657193472/820756728055726142) by `@BronyUraj`)
+* Simplify the XSS to just exfil the flag using {%raw%}`code={{environ("CHALLENGE_FLAG")}}`{%endraw%} because of this line `app.jinja_env.globals.update(environ=os.environ.get)` in `app/backend/backend.py` (thx to `@Gnarf` and `@congon4tor` for pointing it out). Otherwise just use `config.__class__.__init__.__globals__['os'].environ`
+* Use another challenge on the `challenge.nahamcon.com` domain to host a PHP script, and SSRF bot via union sqli to net the `auth2` admin cookie. This works because the puppeteer cookie is set with `domain: challenge.nahamcon.com` in `app/browser/browser.js` (credits to `@liath` for this sneaky [solution](https://discord.com/channels/598608711186907146/820748103657193472/820764258480422952))
 
 [@lanjelot](https://twitter.com/lanjelot)
