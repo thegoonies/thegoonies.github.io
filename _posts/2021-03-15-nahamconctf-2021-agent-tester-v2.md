@@ -1,12 +1,12 @@
 ---
 layout: post
-title: NahamCon CTF 2021 - Agent Tester v2 [web]
+title: NahamCon CTF 2021 - AgentTesterV2 [web]
 author: lanjelot
 tags: [ctf, NahamCon CTF, web]
 ---
 
  * Competition: [NahamCon CTF 2021](https://ctftime.org/event/1281)
- * Challenge Name: Agent Tester v2
+ * Challenge Name: AgentTesterV2
  * Type: Web
  * Points: 500 pts
  * Description: 
@@ -171,6 +171,6 @@ Flag: `CHALLENGE_FLAG=flag{6daf77ca9478a1be670acd4547f4976a}`
 Alternative solutions seen on Discord:
 * CSRF bot to POST to `/debug` and get a reverse shell via SSTI (e.g. using [this code](https://discord.com/channels/598608711186907146/820748103657193472/820756728055726142) by `@BronyUraj`)
 * Simplify the XSS to just exfil the flag using {%raw%}`code={{environ("CHALLENGE_FLAG")}}`{%endraw%} because of this line `app.jinja_env.globals.update(environ=os.environ.get)` in `app/backend/backend.py` (thx to `@Gnarf` and `@congon4tor` for pointing it out). Otherwise just use `config.__class__.__init__.__globals__['os'].environ`
-* Use another challenge on the `challenge.nahamcon.com` domain to host a PHP script, and SSRF bot via union sqli to net the `auth2` admin cookie. This works because the puppeteer cookie is set with `domain: challenge.nahamcon.com` in `app/browser/browser.js` (credits to `@liath` for this sneaky [solution](https://discord.com/channels/598608711186907146/820748103657193472/820764258480422952))
+* Use another challenge on the `challenge.nahamcon.com` domain to host a PHP script, and make the bot visit it to capture the admin cookie. This works because the puppeteer cookie is set with `domain: challenge.nahamcon.com` in `app/browser/browser.js` (credits to `@liath` for this sneaky [solution](https://discord.com/channels/598608711186907146/820748103657193472/820764258480422952))
 
 [@lanjelot](https://twitter.com/lanjelot)
