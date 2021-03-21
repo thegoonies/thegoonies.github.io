@@ -69,7 +69,7 @@ while True:
     conn.recvline().decode('ascii') # "Alice says"
     output = conn.recvline().decode('ascii')
     if 'ABORT MISSION' in output:
-        print('Attempt failed, rerying...')
+        print('Attempt failed, retrying...')
         continue
     print('Success %s' % (output,))
     break
