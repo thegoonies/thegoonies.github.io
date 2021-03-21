@@ -38,7 +38,7 @@ What are the chances of all parties to agree on a key? Well, there are `2^3=8` p
 After a successful run, we only need to guess the shared secret out of 2 possibilities (`1` or `p-1`), which is easy to do.
 
 The solution will therefore attempt until successful, and will normally succeed after 4 attempts.
-The AES decryption is straightforward, and the flag that I got it: `Securinets{monkey-in-the-middle_efa8cf7dad56f238cc1ff49473da3ae3}`
+The AES decryption is straightforward, and the flag that I got is: `Securinets{monkey-in-the-middle_efa8cf7dad56f238cc1ff49473da3ae3}`
 
 The solution is therefore:
 ```python
