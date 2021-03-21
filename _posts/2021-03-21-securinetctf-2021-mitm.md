@@ -30,7 +30,7 @@ For example, if as an attacker I send to `Carol` some number `x` instead of `g^a
 
 Therefore, I have decided to supply `x = -1 = p-1 (mod p)`. Note that raising `-1` to any power results in either `1` or `-1` (which is again, `p-1`). So, supplying `Carol`, for instacne, with `p-1` results in her saving the joint key as either `1` or `p-1`, randomly.
 This needs to be done to each party, and each of them "randomly" generates either `1` or `p-1`.
-What are the chances of all parties to agree on a key? Well, there are `2^3=8` possibilities and only in `2` of them there is an agreement, so the chances are `2/8 = 0.25%`, which is pretty good odds.
+What are the chances of all parties to agree on a key? Well, there are `2^3=8` possibilities and only in `2` of them there is an agreement, so the chances are `2/8 = 25%`, which are pretty good odds.
 
 After a successful run, we only need to guess the shared secret out of 2 possibilities (`1` or `p-1`), which is easy to do.
 
