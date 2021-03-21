@@ -16,9 +16,12 @@ The file `app.py` contains an implementation of Diffie-Hellman (`DHx` class), wi
 Assuming `Alice`, `Bob` and `Carol` have private keys `a`, `b` and `c` respectively, the following desrbies the key-exchange scheme:
 1. `Alice` sends `g^a (mod p)` to `Bob`.
 2. `Bob` raises by `b`, generating `g^ab (mod p)` and sends that to `Carol`.
-3. `Carol` receives, raises by `b` and keeps that as the secret: `g^abc (mod p)`.
+3. `Carol` receives, raises by `c` and keeps that as the secret: `g^abc (mod p)`.
 
-If we denote this chain as `A --> B --> C` then similar chains happen to get everyone synced to the same secet: `B --> C --> A` and `C --> A --> B`.
+If we denote this chain as `A --> B --> C` then similar chains happen to get everyone synced to the same secret:
+1. `A --> B --> C` (which we just described)
+2. `B --> C --> A`
+3. `C --> A --> B`
 
 <!--more-->
 
