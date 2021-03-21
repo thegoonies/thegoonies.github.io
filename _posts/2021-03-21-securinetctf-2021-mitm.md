@@ -17,6 +17,7 @@ Assuming `Alice`, `Bob` and `Carol` have private keys `a`, `b` and `c` respectiv
 1. `Alice` sends `g^a (mod p)` to `Bob`.
 2. `Bob` raises by `b`, generating `g^ab (mod p)` and sends that to `Carol`.
 3. `Carol` receives, raises by `b` and keeps that as the secret: `g^abc (mod p)`.
+
 If we denote this chain as `A --> B --> C` then similar chains happen to get everyone synced to the same secet: `B --> C --> A` and `C --> A --> B`.
 
 <!--more-->
