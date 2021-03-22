@@ -15,10 +15,11 @@ tags: [ctf, Union CTF, crypto]
  > nc 134.122.111.232 54321
  > Author: Jack & hyperreality
 
+<!--more-->
+
 The challenge
 =============
 Code is pretty straighforward:
-<!--more-->
 ```python
 import os, random, hashlib, textwrap, json
 from Crypto.Cipher import AES

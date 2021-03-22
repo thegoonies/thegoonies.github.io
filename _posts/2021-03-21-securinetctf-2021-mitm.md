@@ -13,7 +13,7 @@ tags: [crypto, Securinet CTF, MiTM]
  > You managed to get in the middle and control the entire discussion between Alice, Bob and Carol. What are they saying ?
 
 The file `app.py` contains an implementation of Diffie-Hellman (`DHx` class), with fingerprinting too.
-Assuming `Alice`, `Bob` and `Carol` have private keys `a`, `b` and `c` respectively, the following desrbies the key-exchange scheme:
+Assuming `Alice`, `Bob` and `Carol` have private keys `a`, `b` and `c` respectively, the following describes the key-exchange scheme:
 1. `Alice` sends `g^a (mod p)` to `Bob`.
 2. `Bob` raises by `b`, generating `g^ab (mod p)` and sends that to `Carol`.
 3. `Carol` receives, raises by `c` and keeps that as the secret: `g^abc (mod p)`.
@@ -31,7 +31,7 @@ This is kind of equivalent to the QR code option inside WhatsApp to ensure key e
 So, as an attacker, I didn't find any way to break the d-log problem, but I do note that the key exchange has a weekness, as the receiving party still trusts the sending party to follow the "correct" key exchange schema.
 For example, if as an attacker I send to `Carol` some number `x` instead of `g^ab (mod p)`, then `Carol` blindly trusts it and calculates the secret `x^c (mod p)`. There is a limitation, however, as the code checks that the input is stricly larger than 1 and strictly smaller than `p`.
 
-Therefore, I have decided to supply `x = -1 = p-1 (mod p)`. Note that raising `-1` to any power results in either `1` or `-1` (which is again, `p-1`). So, supplying `Carol`, for instacne, with `p-1` results in her saving the joint key as either `1` or `p-1`, randomly.
+Therefore, I have decided to supply `x = -1 = p-1 (mod p)`. Note that raising `-1` to any power results in either `1` or `-1` (which is again, `p-1`). So, supplying `Carol`, for instance, with `p-1` results in her saving the joint key as either `1` or `p-1`, randomly.
 This needs to be done to each party, and each of them "randomly" generates either `1` or `p-1`.
 What are the chances of all parties to agree on a key? Well, there are `2^3=8` possibilities and only in `2` of them there is an agreement, so the chances are `2/8 = 25%`, which are pretty good odds.
 

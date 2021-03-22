@@ -14,6 +14,8 @@ date: 2021-03-21 20:54
  > Let's learn some exploitation!
  >
 
+<!--more-->
+
 ## Reconnaissance
 
 `kill_shot` is a small ELF64 with all traditional mitigations enabled.
@@ -26,8 +28,7 @@ $ checksec ./kill_shot
     PIE:      PIE enabled
 ```
 
-In addition, a quick look at it disassembly shows it loads restrictive seccomp rules early in the `main`, which we can dump using [seccomp-tools](https://github.com/david942j/seccomp-tools):
-<!--more-->
+In addition, a quick look at the disassembly shows it loads restrictive seccomp rules early in the `main`, which we can dump using [seccomp-tools](https://github.com/david942j/seccomp-tools):
 ```
 $ seccomp-tools dump ./kill_shot
  line  CODE  JT   JF      K
@@ -56,7 +57,7 @@ flag is in /home/ctf/flag.txt
 The runtime operates in 3 steps:
  1. Step 1 gives us a controlled format string after making sure we can't use `%n` to write to arbitrary locations. It is however sufficient to leak everything else we need (libc pointers, exe mapped pointers, etc.) to defeat ASLR.
  2. Step 2 gives a totally arbitray write: we can overwrite 8 bytes at any location of our choosing
- 3. Step 3 (last) offers some very basic heap manipulation: we can either create 
+ 3. Step 3 (last) offers some very basic heap manipulation: we can either 
     - create new chunks of controlled size and write the content (i.e. `malloc`+`read`)
     - free those chunks (i.e. `free`)
 
@@ -67,7 +68,7 @@ There's no bug is the allocation/free part (such as heap overflow, double free, 
 
 My original idea was that, since `mprotect` is allowed, the intended purpose is to gain code execution via the arbitrary write, and `mprotect` as `rwx` the heap, when our shellcode would be sitting, doing the typical (`sys_open`, `sys_read`, `sys_write`).
 After wasting a few hours on this, I went a totally different way: we can abuse the fact that `malloc` and `free` can be called on demand, to trigger some function to be called as we wish, and with a pointer to a location we control the content, via the `__malloc_hook` and `__free_hook` function pointers.
-The issue with the current arbitrary write, is that it allows to gain quickly arbitrary code execution but with little to no control over the rest (registers, stack). So I decided to use `scanf` as target of my arbitrary overwrite: `scanf` is a perfect candidate since we entirely control the format string all we need to find is a stack pointer and write a "%s" at that offset. This would have for effect to change our arbitrary write into a stack overflow (and no canary please).
+The issue with the current arbitrary write, is that it allows to gain quickly arbitrary code execution but with little to no control over the rest (registers, stack). So I decided to use `scanf` as target of my arbitrary overwrite, `scanf` is a perfect candidate since we fully control the format string all we need to find is a stack pointer and write a "%s" at that offset. This would have for effect to change our arbitrary write into a stack overflow (and no canary please).
 
 After a few tests, the 4th offset was a good candidate (i.e. `scanf("%4$s")`), and we fully control $pc and the stack.
 
