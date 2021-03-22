@@ -31,7 +31,7 @@ RelRO                         : Full
 # Overview
 1. It reads student username (name can't be lowercase).
 2. It reads the number of subjects.
-3. It loops until n_subjects and reads for floats.
+3. It loops until n_subjects and reads some float numbers.
 
 # Bugs
 1. When reading an invalid student username we can leak memory.
