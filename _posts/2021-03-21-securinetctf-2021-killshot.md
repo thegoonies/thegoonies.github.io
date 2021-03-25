@@ -1,12 +1,12 @@
 ---
 layout: post
-title: kill shot [pwn]
+title: Securinets CTF Quals 2021 - kill shot [pwn]
 author: hugsy
 tags: [pwn, elf64, formatstring, heap]
 date: 2021-03-21 20:54 
 ---
 
- * Competition: [Securinet CTF Quals 2021](https://www.ctfsecurinets.com/challenges)
+ * Competition: [Securinets CTF Quals 2021](https://www.ctfsecurinets.com/challenges)
  * Challenge Name: kill shot
  * Type: pwn
  * Points: 1000 pts

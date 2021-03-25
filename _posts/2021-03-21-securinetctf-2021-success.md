@@ -1,12 +1,12 @@
 ---
 layout: post
-title: success [pwn]
+title: Securinets CTF Quals 2021 - success [pwn]
 author: rick2600
 tags: [pwn, float, FILE]
 date: 2021-03-21 19:38
 ---
 
- * Competition: [Securinet CTF Quals 2021](https://www.ctfsecurinets.com/challenges)
+ * Competition: [Securinets CTF Quals 2021](https://www.ctfsecurinets.com/challenges)
  * Challenge Name: success
  * Type: pwn
  * Points: 1000 pts

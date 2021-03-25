@@ -1,11 +1,11 @@
 ---
 layout: post
-title: Securinet CTF Quals 2021 - MiTM [crypto]
+title: Securinets CTF Quals 2021 - MiTM [crypto]
 author: yo_yo_yo_jbo (0x3d5157636b525761)
 tags: [crypto, Securinet CTF, MiTM]
 ---
 
- * Competition: [Securinet CTF Quals 2021](https://www.ctfsecurinets.com/challenges)
+ * Competition: [Securinets CTF Quals 2021](https://www.ctfsecurinets.com/challenges)
  * Challenge Name: MiTM
  * Type: Crypto
  * Points: 559 pts
