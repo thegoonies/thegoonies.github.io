@@ -146,7 +146,7 @@ Forging this address as an array buffer and attaching an uint32 view to it allow
 
 Full exploit [here](https://gist.github.com/rick2600/f92999a06dd4bf45832ba4633f6a6e87).
 
-This exploit works for both `replme` (16 solves) and `replem2` (4 solves)
+This exploit works for both `replme` (16 solves) and `replme2` (4 solves)
 
 ![replme](https://user-images.githubusercontent.com/2582199/112950609-da208280-9110-11eb-8452-4dee6e32152a.png)
 
