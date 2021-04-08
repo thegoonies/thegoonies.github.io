@@ -67,7 +67,7 @@ PRNG analysis
 
 Interaction anslysis
 ==
-1. We initialize with two PRNGs.
+1. We generate two PRNGs instances.
 2. You have `3` queries to get the next random output, but it'd be the multipication of both PRNGs "next" numbers.
 3. You get *one* guess of the next multipication.
 
