@@ -87,12 +87,12 @@ Solution
 At this point jbo tagged lanjelot in and after reading about his progress on our amazing-in-house-made-ctf-note-sharing app [ctfpad](https://github.com/hugsy/ctfpad/), the following solution was found.
 
 If we send a zero-IV and the 17 bytes `b'\x00'*15 + b'{}'` then the server will decrypt `b'\x00'*15` plus the first byte of the flag for us, in `ECB` mode.
-We receive the decrypted block for `AES-ECB(b'\x00\x00...?')` where `?` is the first byte of the flag, and then we can guess that byte through bruteforce:
+We receive the decrypted block `AES-ECB(b'\x00\x00...?')` where `?` is the first byte of the flag. We can guess that byte through bruteforce:
 1. Send zero-IV and the 16 bytes `b'\x00'*15 + b'a'`
-2. If decrypted block is equal to `AES-ECB(b'\x00\x00...?')` then we successfully guessed that `? == 'a'`
-3. Otherwise, try another char
+2. If decrypted block is equal to `AES-ECB(b'\x00\x00...?')` then `? == 'a'`
+3. Otherwise, try another character
 
-We can repeat the process to get different "last characters" in every block by zero-prefix, revealing the flag one byte at a time.
+We can repeat the process to get the next character, revealing the flag one byte at a time.
 
 The solver:
 ```python
