@@ -9,6 +9,8 @@ tags: [crypto, ångstrom, I'm so random, PRNG]
  * Challenge Name: I'm so random
  * Type: Crypto
  * Points: 100 pts
+ * Description: 
+ > Aplet's quirky and unique so he made my own PRNG! It's not like the other PRNGs, its absolutely unbreakable!
 
 This challenge involves a very broken PRNG.
 
