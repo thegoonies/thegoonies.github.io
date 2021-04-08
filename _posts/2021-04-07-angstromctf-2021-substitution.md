@@ -13,6 +13,8 @@ tags: [crypto, ångstrom, substitution]
 
 This challenge involves solving analyzing polynomials over a Galois field.
 
+<!--more-->
+
 Source
 ==
 We get the source:
